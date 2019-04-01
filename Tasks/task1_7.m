@@ -23,15 +23,8 @@ sizeMean = size(M);
 Mx = (M(sizeMean(1),:) - posVec) * EVecs(:,1);
 My = (M(sizeMean(1),:) - posVec) * EVecs(:,2);
 
-sizeC = size(C);
 std_x = sqrt(EVals(1));
 std_y = sqrt(EVals(2));
-
-A = zeros(sizeC(1),2);
-for c = 1:sizeC
-    A(c,1) = C(c,:) * -1 * EVecs(:,1);
-    A(c,2) = C(c,:) * -1 * EVecs(:,2);
-end
 
 Xplot = linspace(Mx - 5 * std_x, Mx + 5 * std_x, nbins)';
 Yplot = linspace(My - 5 * std_y, My + 5 * std_y, nbins)';
@@ -40,12 +33,19 @@ Yplot = linspace(My - 5 * std_y, My + 5 * std_y, nbins)';
 
 [Xv, Yv] = meshgrid(Xplot, Yplot);
 gridX = [Xv(:), Yv(:)]; % Concatenate to get a 2-D point.
-Dmap = length(Xv(:));
 
-for i = 1:length(gridX) % Apply k-NN for each test point
-    dists = square_dist(A, gridX(i, :))'; % Compute distances
-    [~, I] = min(dists);
-    Dmap(i) = I;
+X = ((EVecs(:,1:2) * gridX') + posVec')'; 
+k = size(C,1);
+Dist = zeros(k, size(X, 1));
+for j = 1:k
+    Dist(j, :) = square_dist(X, C(j, :));
+end
+[~, idx] = min(Dist);
+
+if(size(idx, 2)~=1)
+    Dmap = reshape(idx, nbins, nbins);
+else
+    Dmap = reshape(ones(size(Dist, 1), size(Dist, 2)), nbins, nbins); %only one center as a possibility
 end
 
 figure;
@@ -60,6 +60,9 @@ cmap = [0.80369089, 0.61814689, 0.46674357;
         0.93882353, 0.80156864, 0.4219608;
         0.83652442, 0.74771243, 0.61853136;
         0.7019608 , 0.7019608 , 0.7019608];
+Xplot = linspace(Mx + 5 * std_x, Mx - 5 * std_x, nbins)';
+Yplot = linspace(My + 5 * std_y, My - 5 * std_y, nbins)';
+
 [~,h] = contourf(Xplot(:), Yplot(:), reshape(Dmap, length(Xplot), length(Yplot)));
 set(h,'LineColor','none');
 colormap(cmap);
