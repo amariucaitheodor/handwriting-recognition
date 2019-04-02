@@ -14,17 +14,21 @@ function Dmap = task1_7(MAT_ClusterCentres, MAT_M, MAT_evecs, MAT_evals, posVec,
 %	   the cluster number that the point belongs to.
 
 load(MAT_ClusterCentres, 'C');
-load(MAT_M, 'M')
+load(MAT_M, 'M');
 load(MAT_evals, 'EVals');
 load(MAT_evecs, 'EVecs');
 
-sizeMean = size(M);
+% size is 11x784, M(11,:) is the mean of all digits
+[sizeMean, ~] = size(M); 
 
-Mx = (M(sizeMean(1),:) - posVec) * EVecs(:,1);
-My = (M(sizeMean(1),:) - posVec) * EVecs(:,2);
+% we only need the first two eigenvectors (aka the new PCA basis)
+EVecs = EVecs(:, 1:2); 
+ 
+Mx = (M(sizeMean,:) - posVec) * EVecs(:,1); % x is 1st principal component of the mean
+My = (M(sizeMean,:) - posVec) * EVecs(:,2); % y is 2nd principal component of the mean
 
-std_x = sqrt(EVals(1));
-std_y = sqrt(EVals(2));
+std_x = sqrt(EVals(1)); % std deviation is square root of variance, x is 1st principal component
+std_y = sqrt(EVals(2)); % std deviation is square root of variance, y is 2nd principal component
 
 Xplot = linspace(Mx - 5 * std_x, Mx + 5 * std_x, nbins)';
 Yplot = linspace(My - 5 * std_y, My + 5 * std_y, nbins)';
@@ -34,37 +38,32 @@ Yplot = linspace(My - 5 * std_y, My + 5 * std_y, nbins)';
 [Xv, Yv] = meshgrid(Xplot, Yplot);
 gridX = [Xv(:), Yv(:)]; % Concatenate to get a 2-D point.
 
-X = ((EVecs(:,1:2) * gridX') + posVec')'; 
-k = size(C,1);
-Dist = zeros(k, size(X, 1));
-for j = 1:k
-    Dist(j, :) = square_dist(X, C(j, :));
+X = (EVecs * gridX')' + posVec; % X is PCA matrix of every point on grid, at the position specified by the position vector
+% gridX' 40000x2 has all the x coordinates on the first row, all the y coordinates on the
+% second row
+
+% (EVecs * gridX') 784x40000 applies PCA to all points on the grid by moving all
+% points to new basis determined by 2 axes (the 2 eigenvectors of the covariance matrix)
+% NB Now the matrix needs to be transposed, as points are now represented
+% as columns
+
+Dist = zeros(size(C,1), size(X, 1));
+for j = 1:size(C,1)
+    Dist(j, :) = square_dist(X, C(j, :)); % distance from every point on grid to cluster j
 end
 [~, idx] = min(Dist);
 
 if(size(idx, 2)~=1)
     Dmap = reshape(idx, nbins, nbins);
 else
-    Dmap = reshape(ones(size(Dist, 1), size(Dist, 2)), nbins, nbins); %only one center as a possibility
+    Dmap = reshape(ones(size(Dist, 1), size(Dist, 2)), nbins, nbins); %only one centre
 end
 
-figure;
-% This function will draw the decision boundaries
-cmap = [0.80369089, 0.61814689, 0.46674357;
-        0.81411766, 0.58274512, 0.54901962;
-        0.58339103, 0.62000771, 0.79337179;
-        0.83529413, 0.5584314 , 0.77098041;
-        0.77493273, 0.69831605, 0.54108421;
-        0.72078433, 0.84784315, 0.30039217;
-        0.96988851, 0.85064207, 0.19683199;
-        0.93882353, 0.80156864, 0.4219608;
-        0.83652442, 0.74771243, 0.61853136;
-        0.7019608 , 0.7019608 , 0.7019608];
 Xplot = linspace(Mx + 5 * std_x, Mx - 5 * std_x, nbins)';
 Yplot = linspace(My + 5 * std_y, My - 5 * std_y, nbins)';
 
-[~,h] = contourf(Xplot(:), Yplot(:), reshape(Dmap, length(Xplot), length(Yplot)));
+figure;
+[~,h] = contourf(Xplot, Yplot, Dmap);
 set(h,'LineColor','none');
-colormap(cmap);
 
 end
