@@ -1,0 +1,5 @@
+Elapsed time is 5.249593 seconds.
+
+N=3994
+Nerrs=2.010000e+02
+acc=9.496745e-01

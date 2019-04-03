@@ -12,11 +12,14 @@ tic
 [Ypreds, Ms, Covs] = run_gaussian_classifiers(Xtrain, Ytrain, Xtest, epsilon);
 toc
 
-[cm, ~] = comp_confmat(Ytest, Ypreds, 10); % 10 classes
+[cm, acc] = comp_confmat(Ytest, Ypreds, 10); % 10 classes
 save('./Report files/task2_5/task2_5_cm.mat', 'cm');
 M10 = Ms(:,10);
 save('./Report files/task2_5/task2_5_m10.mat', 'M10');
 Cov10 = Covs(:,:,10);
 save('./Report files/task2_5/task2_5_cov10.mat', 'Cov10');
+
+N = size(Ytest, 1);
+fprintf('\nN=%d\nNerrs=%d\nacc=%d\n\n', N, (1-acc)*N, acc);
 
 end

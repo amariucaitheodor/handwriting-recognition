@@ -29,18 +29,18 @@ Xtst = double(Xtst)/255.0;
 %end
 
 %task1_8(Xtrn, 'digits', 10);
-%lemonorange = importdata('./Tasks/lemon-orange.txt', '\t', 1);
-%task1_8(lemonorange.data, 'lemonorange', 2);
-%faithful = importdata('./Tasks/faithful.txt', '\t', 1);
+%lemonorangeportdata('./Tasks/faithful.txt', '\t', 1);
 %task1_8(faithful.data, 'faithful', 2);
 %iris = importdata('./Tasks/iris.txt', '\t', 1);
 %task1_8(iris.data, 'iris', 3);
 
-%Ks = [1,3,5,10,20];
+%Ks = [1,3,5,10,20]; = importdata('./Tasks/lemon-orange.txt', '\t', 1);
+%task1_8(lemonorange.data, 'lemonorange', 2);
+%faithful = im
 %task2_1(Xtrn, Ytrn, Xtst, Ytst, Ks);
 
 %N=200;
-%Ks = [1];%,3];
+%Ks = [1, 3];
 %for k = 1:size(Ks,2)
 %    Dmap = task2_2(Xtrn(1:N,:), Ytrn(1:N), Ks(k), './Report files/task3/task1_3_evecs.mat', './Report files/task3/task1_3_evals.mat', mean(Xtrn), 200);
 %    save(sprintf('./Report files/task2_2/task2_2_dmap_%d.mat', Ks(k)), 'Dmap');
@@ -49,4 +49,16 @@ Xtst = double(Xtst)/255.0;
 
 %task2_3(Xtrn, Ytrn);
 
-task2_5(Xtrn, Ytrn, Xtst, Ytst, 0.01);
+%[Corrs] = task2_4(Xtrn, Ytrn);
+%save('./Report files/task2_4/task2_4_corrs.mat', 'Corrs');
+
+%task2_5(Xtrn, Ytrn, Xtst, Ytst, 0.01);
+
+%Dmap = task2_6(Xtrn, Ytrn, 0.01, './Report files/task3/task1_3_evecs.mat', './Report files/task3/task1_3_evals.mat', mean(Xtrn), 200);
+%save('./Report files/task2_6/task2_6_dmap.mat', 'Dmap');
+%print(figure(1), '-bestfit', './Report files/task2_6/task2_6_img.pdf', '-dpdf');
+
+%ratio = [0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3];
+%for r = 1:size(ratio, 2)
+%    [CM, acc] = task2_7(Xtrain, Ytrain, Xtest, Ytest, epsilon, ratio);
+%end
