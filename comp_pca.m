@@ -8,7 +8,7 @@ function [EVecs, EVals] = comp_pca(X)
 %       Eigenvalues in descending order, D x 1 vector (double)
 %   (Note that the i-th columns of Evecs should corresponds to the i-th element in EVals)
   
-[V,D] = eig(myCov(X));
+[V,D] = eig(MyCov(X));
 for i=1:size(V,2)
     if V(1,i) < 0
         V(:,i) = (-1) * V(:,i);

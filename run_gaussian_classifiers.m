@@ -20,8 +20,8 @@ Ms = zeros(D, 10);
 Covs = zeros(D,D,10);
 
 for class = 1:10
-    Ms(:,class) = myMean(Xtrain(Ytrain==class-1, :));
-    Covs(:, :, class) = myCov(Xtrain(Ytrain==class-1, :)) + epsilon * eye(D); % normalized by N, biased
+    Ms(:,class) = MyMean(Xtrain(Ytrain==class-1, :));
+    Covs(:, :, class) = MyCov(Xtrain(Ytrain==class-1, :)) + epsilon * eye(D); % normalized by N, biased
 end
 
 prior = [sum(Ytrain(:) == 0) sum(Ytrain(:) == 1) sum(Ytrain(:) == 2) sum(Ytrain(:) == 3) sum(Ytrain(:) == 4) sum(Ytrain(:) == 5) sum(Ytrain(:) == 6) sum(Ytrain(:) == 7) sum(Ytrain(:) == 8) sum(Ytrain(:) == 9)];

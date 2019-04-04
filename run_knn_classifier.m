@@ -8,14 +8,14 @@ function [Ypreds] = run_knn_classifier(Xtrain, Ytrain, Xtest, Ks)
 %   Ypreds : N-by-L matrix (uint8) of predicted labels for Xtest
 
 % distance between each test point and each training observation
-% NOTE: we need the ’square_dist’ function from previous labs
+% NOTE: we need the ’MySqDist’ function from previous labs
 
 testLen = size(Xtest, 1);
 trainLen = size(Xtrain, 1);
 distances = zeros(testLen, trainLen);
 
 for point=1:size(Xtest)
-    distances(point, :) = square_dist(Xtrain, Xtest(point,:));
+    distances(point, :) = MySqDist(Xtrain, Xtest(point,:));
 end
 
 Ypreds = zeros(size(Ks, 2), testLen);

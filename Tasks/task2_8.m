@@ -17,7 +17,7 @@ save(sprintf('./Report files/task2_8/task2_8_cm_%d.mat', L), 'cm');
 Ms1 = MMs(:,1:L); 
 save(sprintf('./Report files/task2_8/task2_8_g%d_m1.mat', L), 'Ms1');
 Covs1 = MCovs(:,:,1:L);
-save(sprintf('./Report files/task2_8/task2_8_g%d _cov1.mat', L), 'Covs1');
+save(sprintf('./Report files/task2_8/task2_8_g%d_cov1.mat', L), 'Covs1');
 
 N = size(Ytest, 1);
 fprintf('\nL=%d\nN=%d\nNerrs=%d\nacc=%d\n\n', L, N, (1-acc)*N, acc);

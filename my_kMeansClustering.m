@@ -27,7 +27,7 @@ for i = 1:maxIter
     % Compute Squared Euclidean distance (i.e. the squared distance)
     % between each cluster centre and each observation
     for c = 1:k
-        D(c,:) = square_dist(X, clusterCentres(c,:));
+        D(c,:) = MySqDist(X, clusterCentres(c,:));
     end
 
     % Assign data to clusters
@@ -54,7 +54,7 @@ for i = 1:maxIter
         if( sum(idx==c) == 0 )
             %warn('k-means: cluster %d is empty', c);
         else
-            clusterCentres(c, :) = myMean( X(idx==c,:) );
+            clusterCentres(c, :) = MyMean( X(idx==c,:) );
         end
     end
     

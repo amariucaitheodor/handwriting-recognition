@@ -32,9 +32,9 @@ for k = 1:10
     % find gaussian distribution for each group l of class k
     for l=1:L
         group = classSubset(Assignments==l, :);
-        MMs(:, (k-1)*L+l) = myMean(group)';
+        MMs(:, (k-1)*L+l) = MyMean(group)';
         mu = MMs(:, (k-1)*L+l);
-        MCovs(:, :, (k-1)*L+l) = myCov(group) + epsilon * eye(D);
+        MCovs(:, :, (k-1)*L+l) = MyCov(group) + epsilon * eye(D);
         sigma = MCovs(:, :, (k-1)*L+l);
         diffMat = Xtest' - repmat(mu, 1, N);
         post_matrix = - 0.5 * diffMat' * inv(sigma) * diffMat - 0.5 * logdet(sigma);

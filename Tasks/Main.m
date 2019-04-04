@@ -18,7 +18,7 @@ Xtst = double(Xtst)/255.0;
 
 %for k = 1:size(Ks,2)
 %    task1_6(sprintf('./Report files/task5/task1_5_c_%d.mat', Ks(k)));
-%    print(figure(k), '-bestfit', sprintf('./Report files/task6/task1_6_imgs %d.pdf', Ks(k)), '-dpdf');
+%    print(figure(k), '-bestfit', sprintf('./Report files/task6/task1_6_imgs_%d.pdf', Ks(k)), '-dpdf');
 %end
 
 %Ks = [1,2,3,5,10];
