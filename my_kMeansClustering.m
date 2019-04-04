@@ -10,9 +10,9 @@ function [clusterCentres, idx, SSE] = my_kMeansClustering(X, k, clusterCentres, 
 %   idx : N-by-1 vector (integer) of cluster index table
 %   SSE : (L+1)-by-1 vector (double) of sum-squared-errors
 
-% If 'maxIter' argument is not given, we set by default to 500
+% If 'maxIter' argument is not given, we set by default to 40
 if nargin < 4
-    maxIter = 500;
+    maxIter = 40;
 end
 
 % This will take a dataset A and random initial cluster centres, and will apply the K-means algorithm.

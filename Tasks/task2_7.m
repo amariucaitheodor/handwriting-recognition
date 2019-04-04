@@ -11,4 +11,7 @@ function [CM, acc] = task2_7(Xtrain, Ytrain, Xtest, Ytest, epsilon, ratio)
 %  CM     : K-by-K matrix (integer) of confusion matrix
 %  acc    : scalar (double) of correct classification rate
 
+[Ypreds, ~, ~] = run_gaussian_classifiers(Xtrain(1:int32(ratio*size(Xtrain,1)), :), Ytrain(1:int32(ratio*size(Xtrain,1)), :), Xtest, epsilon);
+[CM, acc] = comp_confmat(Ytest, Ypreds, 10); % 10 classes
+
 end

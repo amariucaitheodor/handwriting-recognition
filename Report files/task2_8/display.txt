@@ -1,0 +1,20 @@
+Elapsed time is 17.029531 seconds.
+
+L=2
+N=3994
+Nerrs=1.780000e+02
+acc=9.554331e-01
+
+Elapsed time is 57.824870 seconds.
+
+L=5
+N=3994
+Nerrs=1.400000e+02
+acc=9.649474e-01
+
+Elapsed time is 116.828733 seconds.
+
+L=10
+N=3994
+Nerrs=1.010000e+02
+acc=9.747121e-01

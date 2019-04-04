@@ -60,5 +60,13 @@ Xtst = double(Xtst)/255.0;
 
 %ratio = [0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3];
 %for r = 1:size(ratio, 2)
-%    [CM, acc] = task2_7(Xtrain, Ytrain, Xtest, Ytest, epsilon, ratio);
+%    [CM, ~] = task2_7(Xtrn, Ytrn, Xtst, Ytst, 0.01, ratio(r));
+%    save(sprintf('./Report files/task2_7/task2_7_cm_%s.mat', int2str((ratio(r)*100))), 'CM');
+%end
+
+%[Ypreds, MMs, MCovs] = run_mgcs(Xtrn, Ytrn, Xtst, 0.01, 5);
+
+%Ls = [2, 5, 10];
+%for L = 1:size(Ls,2)
+%    task2_8(Xtrn, Ytrn, Xtst, Ytst, 0.01, Ls(L));
 %end
